@@ -1,0 +1,177 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#0f172a;
+    color:white;
+}
+
+/* Navbar */
+
+nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 8%;
+    background:#111827;
+    position:sticky;
+    top:0;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:700;
+}
+
+.logo span{
+    color:#f97316;
+}
+
+nav ul{
+    display:flex;
+    list-style:none;
+    gap:30px;
+}
+
+nav ul li a{
+    text-decoration:none;
+    color:white;
+    transition:0.3s;
+}
+
+nav ul li a:hover{
+    color:#f97316;
+}
+
+/* Hero Section */
+
+.hero{
+    height:90vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:20px;
+}
+
+.hero-content h1{
+    font-size:4rem;
+    margin-bottom:20px;
+}
+
+.hero-content p{
+    font-size:1.2rem;
+    color:#cbd5e1;
+    margin-bottom:30px;
+}
+
+.btn{
+    display:inline-block;
+    padding:15px 35px;
+    background:#f97316;
+    color:white;
+    text-decoration:none;
+    border-radius:8px;
+    font-weight:600;
+    transition:0.3s;
+}
+
+.btn:hover{
+    background:#ea580c;
+    transform:translateY(-3px);
+}
+
+/* Prediction Section */
+
+.prediction{
+    max-width:700px;
+    margin:50px auto;
+    padding:40px;
+    background:#1e293b;
+    border-radius:15px;
+}
+
+.prediction h2{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.input-box{
+    margin-bottom:20px;
+}
+
+.input-box label{
+    display:block;
+    margin-bottom:8px;
+}
+
+.input-box input,
+.input-box select{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+}
+
+button{
+    width:100%;
+    padding:15px;
+    background:#f97316;
+    color:white;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:600;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#ea580c;
+}
+
+#result{
+    margin-top:25px;
+    text-align:center;
+    font-size:22px;
+    font-weight:600;
+    color:#f97316;
+}.auth-container{
+    width:400px;
+    margin:100px auto;
+    background:#1e293b;
+    padding:40px;
+    border-radius:15px;
+}
+
+.auth-container h2{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.auth-container input{
+    width:100%;
+    padding:12px;
+    margin-bottom:15px;
+    border:none;
+    border-radius:8px;
+}
+
+.auth-container button{
+    width:100%;
+}
+
+.auth-container p{
+    text-align:center;
+    margin-top:15px;
+}
+
+.auth-container a{
+    color:#f97316;
+    text-decoration:none;
+}
