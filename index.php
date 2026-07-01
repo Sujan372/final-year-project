@@ -1,5 +1,9 @@
 <?php
 session_start();
+
+// Load theme from session or default to dark
+$theme = $_SESSION['settings']['theme'] ?? 'dark';
+
 // Include live prices to show on dashboard
 require_once 'fuel_price.php';
 $fuelPrices = getFuelPrices();
@@ -52,6 +56,36 @@ $fuelPrices = getFuelPrices();
         .menu a:hover {
             color: #f97316;
         }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            width: 44px;
+            height: 24px;
+            background: #334155;
+            border-radius: 12px;
+            cursor: pointer;
+            position: relative;
+            transition: background 0.3s ease;
+            border: none;
+        }
+        .theme-toggle.light {
+            background: #f97316;
+        }
+        .theme-toggle::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+        .theme-toggle.light::after {
+            transform: translateX(20px);
+        }
+
         .nav-menu-container {
             position: relative;
         }
@@ -111,11 +145,6 @@ $fuelPrices = getFuelPrices();
         .dot-menu-item:hover {
             background: #0f172a;
             color: #ffffff;
-        }
-        .menu-icon {
-            font-size: 16px;
-            width: 20px;
-            text-align: center;
         }
         .hero {
             padding: 60px 60px 40px;
@@ -204,30 +233,31 @@ $fuelPrices = getFuelPrices();
 <body>
     <div class="navbar">
         <div class="logo">
-            ⛽ TurboFuel
+            TF TurboFuel
             <p>"The Intelligent Way to Refuel"</p>
         </div>
         <div class="right-section">
             <div class="menu">
                 <a href="profile.php">Profile</a>
             </div>
+
+            <!-- Theme Toggle Button -->
+            <button class="theme-toggle <?php echo ($theme == 'light') ? 'light' : ''; ?>" 
+                    id="themeToggle" 
+                    onclick="toggleTheme()" 
+                    title="Switch theme">
+            </button>
+
             <div class="nav-menu-container">
                 <button class="three-dot-btn" onclick="toggleDotMenu()" title="More options">
                     <span></span><span></span><span></span>
                 </button>
                 <div class="dot-menu-dropdown" id="dotMenu">
-                    <a href="route_finder.php" class="dot-menu-item">
-                        <span class="menu-icon">&#128506;</span> Route Finder
-                    </a>
-                    <a href="wait_time.php" class="dot-menu-item">
-                        <span class="menu-icon">&#128196;</span> Wait Time
-                    </a>
-                    <a href="trip_log.php" class="dot-menu-item">
-                        <span class="menu-icon">&#11088;</span> Trip Log
-                    </a>
-                    <a href="settings.php" class="dot-menu-item">
-                        <span class="menu-icon">&#9881;</span> Settings
-                    </a>
+                    <a href="route_finder.php" class="dot-menu-item">Route Finder</a>
+                    <a href="wait_time.php" class="dot-menu-item">Wait Time</a>
+                    <a href="trip_log.php" class="dot-menu-item">Trip Log</a>
+                    <a href="price_trends.php" class="dot-menu-item">Price Trends</a>
+                    <a href="settings.php" class="dot-menu-item">Settings</a>
                 </div>
             </div>
         </div>
@@ -238,26 +268,25 @@ $fuelPrices = getFuelPrices();
         <p>Smart Fuel Station Waiting Time Estimation System</p>
     </div>
 
-    <!-- Live price banner -->
     <div class="price-banner">
-        Today's Fuel Prices: Petrol ₹<?php echo $fuelPrices['petrol']; ?>/L | Diesel ₹<?php echo $fuelPrices['diesel']; ?>/L | CNG ₹<?php echo $fuelPrices['cng']; ?>/kg
+        Today's Fuel Prices: Petrol Rs.<?php echo $fuelPrices['petrol']; ?>/L | Diesel Rs.<?php echo $fuelPrices['diesel']; ?>/L | CNG Rs.<?php echo $fuelPrices['cng']; ?>/kg
     </div>
 
     <div class="cards">
         <a href="history.php" class="card">
-            <h2>⛽ Fuel History</h2>
+            <h2>Fuel History</h2>
             <p>View all previous fuel estimations and activities.</p>
         </a>
         <a href="saved_stations.php" class="card">
-            <h2>⭐ Saved Stations</h2>
+            <h2>Saved Stations</h2>
             <p>Quick access to your favourite fuel stations.</p>
         </a>
         <a href="route_finder.php" class="card">
-            <h2>🗺️ Route Finder</h2>
+            <h2>Route Finder</h2>
             <p>Find fuel stations along your journey.</p>
         </a>
         <a href="settings.php" class="card">
-            <h2>⚙️ Settings</h2>
+            <h2>Settings</h2>
             <p>Manage your profile and account preferences.</p>
         </a>
     </div>
@@ -273,7 +302,6 @@ $fuelPrices = getFuelPrices();
         TurboFuel &copy; 2026 | Fuel Station Waiting Time Estimation System
     </div>
 
-    <?php include 'theme.php'; ?>
     <script>
         function toggleDotMenu() {
             document.getElementById('dotMenu').classList.toggle('show');
@@ -285,6 +313,33 @@ $fuelPrices = getFuelPrices();
                 menu.classList.remove('show');
             }
         });
+
+        // Theme toggle function
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme') || 'dark';
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('turbo_theme', next);
+            
+            // Update toggle button
+            const toggleBtn = document.getElementById('themeToggle');
+            if (next === 'light') {
+                toggleBtn.classList.add('light');
+            } else {
+                toggleBtn.classList.remove('light');
+            }
+            
+            // Save to session via AJAX
+            fetch('update_theme.php?theme=' + next);
+        }
     </script>
+
+    <!-- Theme Script -->
+    <script>
+        const theme = '<?php echo $theme; ?>';
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('turbo_theme', theme);
+    </script>
+    <?php include 'theme.php'; ?>
 </body>
 </html>
