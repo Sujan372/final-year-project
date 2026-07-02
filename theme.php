@@ -1,5 +1,4 @@
 <script>
-    // Apply saved theme on page load
     (function() {
         const saved = localStorage.getItem('turbo_theme') || 'dark';
         document.documentElement.setAttribute('data-theme', saved);
@@ -7,11 +6,14 @@
 </script>
 
 <style>
-    [data-theme="light"] body {
-        background: #f5f5f7 !important;
-        background-image: none !important;
+    /* ========== LIGHT THEME – UNIVERSAL FIX ========== */
+    [data-theme="light"] body,
+    [data-theme="light"] body * {
+        color: #1a1a2e !important;
+        background-color: transparent !important; /* allow container backgrounds to show */
     }
 
+    /* Restore container backgrounds (white) */
     [data-theme="light"] .navbar,
     [data-theme="light"] .card,
     [data-theme="light"] .profile-container,
@@ -35,50 +37,52 @@
     [data-theme="light"] .ticket-item,
     [data-theme="light"] .faq-item,
     [data-theme="light"] .main-content,
-    [data-theme="light"] .container {
-        background: #ffffff !important;
-        border-color: #e0e0e6 !important;
+    [data-theme="light"] .container,
+    [data-theme="light"] .quick-booking,
+    [data-theme="light"] .profile-section,
+    [data-theme="light"] body {
+        background-color: #ffffff !important;
     }
 
+    /* ===== EXCEPTIONS ===== */
+
+    /* Keep orange accent text */
+    [data-theme="light"] .logo,
+    [data-theme="light"] .page-title h1 span,
+    [data-theme="light"] .hero span,
+    [data-theme="light"] .cost-highlight,
+    [data-theme="light"] .profile-section h2,
+    [data-theme="light"] .card h2,
+    [data-theme="light"] .quick-booking h2,
+    [data-theme="light"] .stat-value.accent,
+    [data-theme="light"] .fuel-badge,
+    [data-theme="light"] .price-banner {
+        color: #f97316 !important;
+    }
+
+    /* Auth banner stays white text on dark */
+    [data-theme="light"] .auth-banner,
+    [data-theme="light"] .auth-banner * {
+        color: #ffffff !important;
+        background-color: initial !important;
+    }
+
+    /* Input backgrounds */
     [data-theme="light"] input,
     [data-theme="light"] select,
     [data-theme="light"] textarea {
-        background: #f0f0f3 !important;
+        background-color: #f0f0f3 !important;
         color: #1a1a2e !important;
         border-color: #e0e0e6 !important;
     }
 
-    [data-theme="light"] input::placeholder,
-    [data-theme="light"] textarea::placeholder {
-        color: #a0a0b0 !important;
-    }
-
+    /* Table header rows */
     [data-theme="light"] table th {
-        background: #f0f0f3 !important;
+        background-color: #f0f0f3 !important;
     }
 
-    [data-theme="light"] table td {
-        border-bottom-color: #e0e0e6 !important;
-    }
-
-    [data-theme="light"] table tbody tr:hover {
-        background: #f0f0f3 !important;
-    }
-
-    [data-theme="light"] .btn-outline,
-    [data-theme="light"] .cancel-btn,
-    [data-theme="light"] .back-btn,
-    [data-theme="light"] .home-btn {
-        background: #f0f0f3 !important;
-        border-color: #e0e0e6 !important;
-    }
-
+    /* Toggle slider */
     [data-theme="light"] .toggle-slider {
-        background: #d0d0d8 !important;
-    }
-
-    [data-theme="light"] .auth-banner,
-    [data-theme="light"] .auth-banner * {
-        color: #ffffff !important;
+        background-color: #d0d0d8 !important;
     }
 </style>
