@@ -1,283 +1,178 @@
 <?php
 session_start();
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forgot Password - Turbo Line</title>
-    
-    <!-- Favicon -->
+    <title>Forgot Password - TurboFuel</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
-    
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
+            background: #f1f5f9;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 24px;
+            color: #0f172a;
         }
 
         .forgot-container {
             width: 100%;
-            max-width: 450px;
-            background: #1a1a2e;
-            border-radius: 24px;
-            padding: 45px 40px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
-            position: relative;
-            overflow: hidden;
+            max-width: 420px;
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 40px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 24px rgba(15, 23, 42, 0.06);
             text-align: center;
         }
 
-        .forgot-container::before {
-            content: '';
-            position: absolute;
-            top: -80px;
-            right: -80px;
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(249, 115, 22, 0.12) 0%, transparent 70%);
-            border-radius: 50%;
+        .icon-badge {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: #eff6ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 18px;
         }
 
-        .forgot-container::after {
-            content: '';
-            position: absolute;
-            bottom: -60px;
-            left: -60px;
-            width: 160px;
-            height: 160px;
-            background: radial-gradient(circle, rgba(249, 115, 22, 0.08) 0%, transparent 70%);
-            border-radius: 50%;
-        }
+        .icon-badge svg { color: #2563eb; }
 
-        .forgot-icon {
-            font-size: 55px;
-            margin-bottom: 15px;
-            position: relative;
-            z-index: 1;
-            animation: bounce 2s ease-in-out infinite;
-        }
+        .forgot-header { margin-bottom: 26px; }
 
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-12px); }
-        }
-
-        .forgot-header {
-            position: relative;
-            z-index: 1;
-            margin-bottom: 10px;
-        }
-
-        .forgot-header h1 {
-            font-size: 24px;
-            font-weight: 700;
-            color: #ffffff;
-            letter-spacing: -0.5px;
-        }
-
-        .forgot-header h1 span {
-            color: #f97316;
-        }
+        .forgot-header h1 { font-size: 20px; font-weight: 700; color: #0f172a; letter-spacing: -0.2px; }
+        .forgot-header h1 span { color: #2563eb; }
 
         .forgot-header p {
-            color: #8888a0;
+            color: #64748b;
             font-size: 14px;
             margin-top: 8px;
             line-height: 1.6;
         }
 
         .alert {
-            padding: 14px 18px;
-            border-radius: 12px;
-            margin-bottom: 22px;
-            font-size: 14px;
-            font-weight: 500;
-            position: relative;
-            z-index: 1;
-            text-align: left;
-            animation: slideDown 0.4s ease;
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .alert-error {
-            background: rgba(239, 68, 68, 0.15);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: #f87171;
-        }
-
-        .alert-success {
-            background: rgba(34, 197, 94, 0.15);
-            border: 1px solid rgba(34, 197, 94, 0.3);
-            color: #4ade80;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 1;
-            text-align: left;
-        }
-
-        .input-group label {
-            display: block;
-            color: #c0c0d0;
-            font-size: 13px;
-            font-weight: 500;
-            margin-bottom: 6px;
-        }
-
-        .input-wrapper {
-            position: relative;
             display: flex;
             align-items: center;
+            gap: 8px;
+            padding: 11px 14px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 13.5px;
+            font-weight: 500;
+            text-align: left;
         }
+
+        .alert svg { flex-shrink: 0; }
+        .alert-error { background: #fef2f2; border: 1px solid #fecaca; color: #dc2626; }
+        .alert-success { background: #f0fdf4; border: 1px solid #bbf7d0; color: #16a34a; }
+
+        .input-group { margin-bottom: 20px; text-align: left; }
+        .input-group label { display: block; color: #334155; font-size: 13px; font-weight: 500; margin-bottom: 6px; }
+
+        .input-wrapper { position: relative; display: flex; align-items: center; }
 
         .input-icon {
             position: absolute;
-            left: 14px;
-            font-size: 16px;
-            z-index: 1;
+            left: 13px;
+            color: #94a3b8;
+            display: flex;
+            pointer-events: none;
         }
 
         .input-wrapper input {
             width: 100%;
-            padding: 14px 14px 14px 42px;
-            background: #222240;
-            border: 2px solid #2a2a4a;
-            border-radius: 12px;
-            color: #ffffff;
+            padding: 12px 14px 12px 40px;
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            color: #0f172a;
             font-size: 14px;
             font-family: 'Inter', sans-serif;
-            transition: all 0.3s ease;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
             outline: none;
         }
 
         .input-wrapper input:focus {
-            border-color: #f97316;
-            box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1);
-            background: #252548;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
         }
 
-        .input-wrapper input::placeholder {
-            color: #5a5a7a;
-        }
+        .input-wrapper input::placeholder { color: #94a3b8; }
 
         .submit-btn {
             width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            padding: 12px;
+            background: #2563eb;
             color: #ffffff;
-            font-size: 16px;
+            font-size: 14.5px;
             font-weight: 600;
             font-family: 'Inter', sans-serif;
             border: none;
-            border-radius: 12px;
+            border-radius: 10px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            letter-spacing: 0.3px;
-            position: relative;
-            z-index: 1;
+            transition: background 0.15s ease;
         }
 
-        .submit-btn:hover {
-            background: linear-gradient(135deg, #fb923c 0%, #f97316 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(249, 115, 22, 0.3);
-        }
-
-        .submit-btn:active {
-            transform: translateY(0);
-        }
+        .submit-btn:hover { background: #1d4ed8; }
 
         .back-link {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             margin-top: 20px;
-            color: #8888a0;
+            color: #64748b;
             text-decoration: none;
-            font-size: 14px;
+            font-size: 13.5px;
             font-weight: 500;
-            transition: color 0.3s;
-            position: relative;
-            z-index: 1;
         }
 
-        .back-link:hover {
-            color: #f97316;
-        }
+        .back-link:hover { color: #2563eb; }
 
-        @media (max-width: 500px) {
-            .forgot-container {
-                padding: 30px 20px;
-                border-radius: 16px;
-            }
-
-            .forgot-icon {
-                font-size: 40px;
-            }
-
-            .forgot-header h1 {
-                font-size: 20px;
-            }
-
-            .input-wrapper input {
-                padding: 12px 12px 12px 38px;
-            }
+        @media (max-width: 480px) {
+            .forgot-container { padding: 30px 24px; border-radius: 14px; }
         }
     </style>
 </head>
 <body>
-    
     <div class="forgot-container">
-        
-        <!-- Icon -->
-        <div class="forgot-icon">🔑</div>
-        
-        <!-- Header -->
+        <div class="icon-badge">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></svg>
+        </div>
+
         <div class="forgot-header">
-            <h1>Turbo<span>Line</span></h1>
+            <h1>Turbo<span>Fuel</span></h1>
             <p>Enter your email address and we'll send you a link to reset your password.</p>
         </div>
-        
-        <!-- Form -->
-        <form method="POST" action="send_reset_link.php">
+
+        <form method="POST" action="send_reset_link.php" novalidate>
             <div class="input-group">
-                <label for="email">Email Address</label>
+                <label for="email">Email address</label>
                 <div class="input-wrapper">
-                    <span class="input-icon">📧</span>
+                    <span class="input-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>
+                    </span>
                     <input type="email" id="email" name="email" placeholder="Enter your registered email" required>
                 </div>
             </div>
-            
-            <button type="submit" class="submit-btn">Send Reset Link</button>
-        </form>
-        
-        <!-- Back to Login -->
-        <a href="login.php" class="back-link">⬅ Back to Login</a>
-        
-    </div>
 
+            <button type="submit" class="submit-btn">Send reset link</button>
+        </form>
+
+        <a href="login.php" class="back-link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            Back to login
+        </a>
+    </div>
 </body>
 </html>

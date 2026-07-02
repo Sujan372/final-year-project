@@ -45,9 +45,9 @@ if (isset($_GET['clear_all'])) {
 // Success/delete messages
 $message = "";
 if (isset($_GET['msg'])) {
-    if ($_GET['msg'] == 'deleted') $message = "Entry deleted successfully!";
-    if ($_GET['msg'] == 'cleared') $message = "All history cleared!";
-    if ($_GET['msg'] == 'saved') $message = "Fuel estimation saved to history!";
+    if ($_GET['msg'] == 'deleted') $message = "Entry deleted successfully.";
+    if ($_GET['msg'] == 'cleared') $message = "All history cleared.";
+    if ($_GET['msg'] == 'saved') $message = "Fuel estimation saved to history.";
 }
 
 // Pagination
@@ -99,7 +99,7 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fuel History - Turbo Line</title>
+    <title>Fuel History - TurboFuel</title>
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
@@ -121,10 +121,11 @@ $conn->close();
             background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
             min-height: 100vh;
             padding: 30px 20px;
+            color: #e2e8f0;
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
         }
 
@@ -133,37 +134,25 @@ $conn->close();
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             flex-wrap: wrap;
             gap: 15px;
         }
 
-        .page-title {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .page-title .icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            box-shadow: 0 8px 20px rgba(249, 115, 22, 0.3);
-        }
-
         .page-title h1 {
-            font-size: 24px;
+            font-size: 26px;
             font-weight: 700;
-            color: #ffffff;
+            color: #f8fafc;
         }
 
         .page-title h1 span {
             color: #f97316;
+        }
+
+        .page-title .subtitle {
+            font-size: 14px;
+            color: #94a3b8;
+            margin-top: 4px;
         }
 
         .header-btns {
@@ -171,36 +160,51 @@ $conn->close();
             gap: 10px;
         }
 
-        .back-btn, .home-btn {
-            padding: 10px 20px;
-            background: #222240;
-            color: #a0a0b8;
-            text-decoration: none;
+        .btn {
+            padding: 10px 18px;
             border-radius: 10px;
             font-size: 14px;
             font-weight: 500;
-            border: 1px solid #2a2a4a;
+            text-decoration: none;
             transition: all 0.3s ease;
+            border: 1px solid transparent;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        .back-btn:hover, .home-btn:hover {
+        .btn-outline {
+            background: #1e293b;
+            color: #cbd5e1;
+            border-color: #334155;
+        }
+
+        .btn-outline:hover {
             border-color: #f97316;
             color: #ffffff;
+            background: #1e293b;
         }
 
-        .home-btn {
-            background: rgba(249, 115, 22, 0.1);
-            border-color: rgba(249, 115, 22, 0.3);
-            color: #f97316;
+        .btn-primary {
+            background: #f97316;
+            color: #ffffff;
+            border-color: #f97316;
+        }
+
+        .btn-primary:hover {
+            background: #ea580c;
         }
 
         /* ========== MESSAGE ========== */
         .message {
-            padding: 12px 18px;
-            border-radius: 10px;
-            margin-bottom: 20px;
+            padding: 14px 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
             font-size: 14px;
             font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
             animation: slideDown 0.4s ease;
         }
 
@@ -218,14 +222,14 @@ $conn->close();
         /* ========== STATS CARDS ========== */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             gap: 15px;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
         }
 
         .stat-card {
-            background: #1a1a2e;
-            border: 1px solid #2a2a4a;
+            background: #1e293b;
+            border: 1px solid #334155;
             border-radius: 16px;
             padding: 20px;
             text-align: center;
@@ -235,33 +239,32 @@ $conn->close();
         .stat-card:hover {
             border-color: #f97316;
             transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .stat-icon {
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-
-        .stat-value {
-            font-size: 22px;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 4px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
         }
 
         .stat-label {
-            font-size: 11px;
-            color: #8888a0;
+            font-size: 12px;
+            color: #94a3b8;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 26px;
+            font-weight: 700;
+            color: #f8fafc;
+        }
+
+        .stat-value.accent {
+            color: #f97316;
         }
 
         /* ========== FUEL BREAKDOWN ========== */
         .fuel-breakdown {
             display: flex;
             gap: 10px;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             flex-wrap: wrap;
         }
 
@@ -270,9 +273,6 @@ $conn->close();
             border-radius: 20px;
             font-size: 13px;
             font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
         .fuel-chip.petrol {
@@ -295,8 +295,8 @@ $conn->close();
 
         /* ========== HISTORY TABLE ========== */
         .history-card {
-            background: #1a1a2e;
-            border: 1px solid #2a2a4a;
+            background: #1e293b;
+            border: 1px solid #334155;
             border-radius: 20px;
             padding: 25px;
             overflow: hidden;
@@ -308,13 +308,13 @@ $conn->close();
             justify-content: space-between;
             margin-bottom: 20px;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 15px;
         }
 
         .history-header h2 {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 600;
-            color: #ffffff;
+            color: #f8fafc;
         }
 
         .clear-btn {
@@ -335,16 +335,19 @@ $conn->close();
 
         .table-wrapper {
             overflow-x: auto;
+            margin: 0 -25px;
+            padding: 0 25px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
+            min-width: 700px;
         }
 
         table th {
-            background: #222240;
-            color: #a0a0b8;
+            background: #0f172a;
+            color: #94a3b8;
             font-size: 12px;
             font-weight: 600;
             text-transform: uppercase;
@@ -356,9 +359,9 @@ $conn->close();
 
         table td {
             padding: 14px 16px;
-            color: #c8c8d8;
-            font-size: 13px;
-            border-bottom: 1px solid #222240;
+            color: #cbd5e1;
+            font-size: 14px;
+            border-bottom: 1px solid #334155;
             white-space: nowrap;
         }
 
@@ -367,14 +370,14 @@ $conn->close();
         }
 
         table tbody tr:hover {
-            background: #222240;
+            background: #263348;
         }
 
         .fuel-badge {
             display: inline-block;
             padding: 4px 12px;
             border-radius: 20px;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 600;
             text-transform: uppercase;
         }
@@ -418,42 +421,32 @@ $conn->close();
             padding: 60px 20px;
         }
 
-        .empty-state .empty-icon {
-            font-size: 60px;
-            margin-bottom: 15px;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
         .empty-state h3 {
-            color: #ffffff;
-            font-size: 18px;
-            margin-bottom: 8px;
+            color: #f8fafc;
+            font-size: 20px;
+            margin-bottom: 10px;
         }
 
         .empty-state p {
-            color: #8888a0;
-            font-size: 14px;
-            margin-bottom: 20px;
+            color: #94a3b8;
+            font-size: 15px;
+            margin-bottom: 25px;
         }
 
         .empty-state .start-btn {
             display: inline-block;
             padding: 12px 24px;
-            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            background: #f97316;
             color: #ffffff;
             text-decoration: none;
             border-radius: 10px;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 15px;
             transition: all 0.3s ease;
         }
 
         .empty-state .start-btn:hover {
+            background: #ea580c;
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(249, 115, 22, 0.3);
         }
@@ -463,8 +456,8 @@ $conn->close();
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            margin-top: 20px;
+            gap: 8px;
+            margin-top: 25px;
             flex-wrap: wrap;
         }
 
@@ -474,13 +467,13 @@ $conn->close();
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #222240;
-            color: #a0a0b8;
+            background: #1e293b;
+            color: #cbd5e1;
             text-decoration: none;
             border-radius: 10px;
             font-size: 14px;
             font-weight: 500;
-            border: 1px solid #2a2a4a;
+            border: 1px solid #334155;
             transition: all 0.3s ease;
             padding: 0 12px;
         }
@@ -502,9 +495,9 @@ $conn->close();
         }
 
         .page-info {
-            color: #8888a0;
+            color: #94a3b8;
             font-size: 13px;
-            margin-top: 10px;
+            margin-top: 12px;
             text-align: center;
         }
 
@@ -524,11 +517,11 @@ $conn->close();
 
             table th, table td {
                 padding: 10px 8px;
-                font-size: 11px;
+                font-size: 13px;
             }
 
             .stat-value {
-                font-size: 18px;
+                font-size: 22px;
             }
         }
     </style>
@@ -540,46 +533,43 @@ $conn->close();
         <!-- Header -->
         <div class="page-header">
             <div class="page-title">
-                <div class="icon">⛽</div>
-                <h1>Turbo<span>Line</span> History</h1>
+                <h1>Turbo<span>Fuel</span> History</h1>
+                <p class="subtitle">Your complete fueling timeline and statistics</p>
             </div>
             <div class="header-btns">
-                <a href="profile.php" class="back-btn">👤 Profile</a>
-                <a href="index.php" class="home-btn">🏠 Home</a>
+                <a href="profile.php" class="btn btn-outline">Profile</a>
+                <a href="index.php" class="btn btn-primary">Dashboard</a>
             </div>
         </div>
         
         <!-- Success Message -->
         <?php if (!empty($message)): ?>
-            <div class="message message-success">✅ <?php echo htmlspecialchars($message); ?></div>
+            <div class="message message-success">
+                <span>&check;</span> <?php echo htmlspecialchars($message); ?>
+            </div>
         <?php endif; ?>
         
         <!-- Stats Cards -->
         <div class="stats-grid">
             <div class="stat-card">
-                <div class="stat-icon">📋</div>
-                <div class="stat-value"><?php echo number_format($stats['total_entries']); ?></div>
                 <div class="stat-label">Total Fuelings</div>
+                <div class="stat-value accent"><?php echo number_format($stats['total_entries']); ?></div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon">💰</div>
-                <div class="stat-value">₹<?php echo number_format($stats['total_spent'], 2); ?></div>
                 <div class="stat-label">Total Spent</div>
+                <div class="stat-value">Rs. <?php echo number_format($stats['total_spent'], 2); ?></div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon">🛢️</div>
-                <div class="stat-value"><?php echo number_format($stats['total_litres'], 2); ?> L</div>
                 <div class="stat-label">Total Volume</div>
+                <div class="stat-value"><?php echo number_format($stats['total_litres'], 2); ?> L</div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon">⏱️</div>
-                <div class="stat-value"><?php echo number_format($stats['total_time'], 1); ?> min</div>
                 <div class="stat-label">Total Time</div>
+                <div class="stat-value"><?php echo number_format($stats['total_time'], 1); ?> min</div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon">📊</div>
-                <div class="stat-value">₹<?php echo number_format($stats['avg_price'], 2); ?></div>
                 <div class="stat-label">Avg Price/Unit</div>
+                <div class="stat-value">Rs. <?php echo number_format($stats['avg_price'], 2); ?></div>
             </div>
         </div>
         
@@ -588,7 +578,7 @@ $conn->close();
             <div class="fuel-breakdown">
                 <?php foreach ($fuelStats as $fs): ?>
                     <div class="fuel-chip <?php echo $fs['fuel_type']; ?>">
-                        <?php echo ucfirst($fs['fuel_type']); ?>: <?php echo $fs['count']; ?> times | ₹<?php echo number_format($fs['spent'], 2); ?>
+                        <?php echo ucfirst($fs['fuel_type']); ?>: <?php echo $fs['count']; ?> times | Rs. <?php echo number_format($fs['spent'], 2); ?>
                     </div>
                 <?php endforeach; ?>
             </div>
@@ -597,9 +587,9 @@ $conn->close();
         <!-- History Table -->
         <div class="history-card">
             <div class="history-header">
-                <h2>📜 Fueling History</h2>
+                <h2>Fueling Records</h2>
                 <?php if ($totalRows > 0): ?>
-                    <a href="history.php?clear_all=1" class="clear-btn" onclick="return confirm('Delete ALL history? This cannot be undone!')">🗑️ Clear All History</a>
+                    <a href="history.php?clear_all=1" class="clear-btn" onclick="return confirm('Delete ALL history? This cannot be undone!')">Clear All History</a>
                 <?php endif; ?>
             </div>
             
@@ -626,19 +616,19 @@ $conn->close();
                             ?>
                                 <tr>
                                     <td><?php echo $count++; ?></td>
-                                    <td><?php echo date('d M Y', strtotime($row['created_at'])); ?><br><small style="color:#6a6a8a;"><?php echo date('h:i A', strtotime($row['created_at'])); ?></small></td>
+                                    <td><?php echo date('d M Y', strtotime($row['created_at'])); ?><br><small style="color:#64748b;"><?php echo date('h:i A', strtotime($row['created_at'])); ?></small></td>
                                     <td>
                                         <span class="fuel-badge fuel-<?php echo $row['fuel_type']; ?>">
                                             <?php echo ucfirst($row['fuel_type']); ?>
                                         </span>
                                     </td>
                                     <td><?php echo number_format($row['litres'], 2); ?> <?php echo ($row['fuel_type'] == 'cng') ? 'kg' : 'L'; ?></td>
-                                    <td>₹<?php echo number_format($row['price_per_unit'], 2); ?></td>
-                                    <td class="cost-highlight">₹<?php echo number_format($row['total_cost'], 2); ?></td>
+                                    <td>Rs. <?php echo number_format($row['price_per_unit'], 2); ?></td>
+                                    <td class="cost-highlight">Rs. <?php echo number_format($row['total_cost'], 2); ?></td>
                                     <td><?php echo number_format($row['time_estimated'], 2); ?> min</td>
                                     <td><?php echo htmlspecialchars($row['station_name'] ?? '--'); ?></td>
                                     <td>
-                                        <a href="history.php?delete=<?php echo $row['id']; ?>" class="delete-btn" onclick="return confirm('Delete this entry?')" title="Delete">🗑️</a>
+                                        <a href="history.php?delete=<?php echo $row['id']; ?>" class="delete-btn" onclick="return confirm('Delete this entry?')" title="Delete">&#10005;</a>
                                     </td>
                                 </tr>
                             <?php endwhile; ?>
@@ -649,7 +639,7 @@ $conn->close();
                 <!-- Pagination -->
                 <?php if ($totalPages > 1): ?>
                     <div class="pagination">
-                        <a href="history.php?page=<?php echo $page-1; ?>" class="page-link <?php echo ($page <= 1) ? 'disabled' : ''; ?>">◀ Prev</a>
+                        <a href="history.php?page=<?php echo $page-1; ?>" class="page-link <?php echo ($page <= 1) ? 'disabled' : ''; ?>">Prev</a>
                         
                         <?php 
                         $startPage = max(1, $page - 2);
@@ -662,17 +652,16 @@ $conn->close();
                             </a>
                         <?php endfor; ?>
                         
-                        <a href="history.php?page=<?php echo $page+1; ?>" class="page-link <?php echo ($page >= $totalPages) ? 'disabled' : ''; ?>">Next ▶</a>
+                        <a href="history.php?page=<?php echo $page+1; ?>" class="page-link <?php echo ($page >= $totalPages) ? 'disabled' : ''; ?>">Next</a>
                     </div>
                     <p class="page-info">Page <?php echo $page; ?> of <?php echo $totalPages; ?> (<?php echo $totalRows; ?> total entries)</p>
                 <?php endif; ?>
                 
             <?php else: ?>
                 <div class="empty-state">
-                    <div class="empty-icon">⛽</div>
                     <h3>No Fueling History Yet</h3>
                     <p>Start using the fuel estimator to track your fuel expenses and time.</p>
-                    <a href="index.php" class="start-btn">🚀 Start Estimating</a>
+                    <a href="index.php" class="start-btn">Start Estimating</a>
                 </div>
             <?php endif; ?>
         </div>
